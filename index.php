@@ -1,325 +1,269 @@
+<?php
+session_start();
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Restaurant | Menu & Table Booking</title>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
-  <style>
-    
-    *{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif}
-    body{background:#fafafa;color:#333}
-    header{background:url('https://images.unsplash.com/photo-1552566626-52f8b828add9') center/cover no-repeat;height:90vh;color:#fff}
-    header::after{content:'';position:absolute;inset:0;background:rgba(0,0,0,.55)}
-    .hero{position:relative;z-index:1;height:100%;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:20px}
-    .hero h1{font-size:3rem;font-weight:700}
-    .hero p{margin:15px 0;font-size:1.1rem}
-    .btn{padding:12px 25px;background:#c59d5f;color:#fff;border:none;border-radius:30px;cursor:pointer;text-decoration:none;font-weight:600}
-    nav{position:absolute;top:0;width:100%;display:flex;justify-content:space-between;align-items:center;padding:20px 50px;z-index:2}
-    nav h2{color:#fff}
-    nav a{color:#fff;margin-left:20px;text-decoration:none;font-weight:500}
-    section{padding:80px 8%}
-    .section-title{text-align:center;margin-bottom:50px}
-    .section-title h2{font-size:2.2rem}
-    .menu{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:30px}
-    .menu-card{background:#fff;border-radius:15px;overflow:hidden;box-shadow:0 10px 25px rgba(0,0,0,.1)}
-    .menu-card img{width:100%;height:200px;object-fit:cover}
-    .menu-card .info{padding:20px}
-    .menu-card h3{margin-bottom:10px}
-    .price{color:#c59d5f;font-weight:600}
-    .booking{background:#111;color:#fff;border-radius:20px;padding:50px}
-    .booking form{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:20px}
-    input,select{padding:12px;border-radius:10px;border:none}
-    .gallery{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:20px}
-    .gallery img{width:100%;height:220px;object-fit:cover;border-radius:15px}
-    footer{background:#000;color:#aaa;text-align:center;padding:25px}
-    /* ===== MOBILE RESPONSIVE ===== */
-
-@media (max-width: 768px){
-
-  header{
-    height:70vh;
-  }
-
-  .hero h1{
-    font-size:2rem;
-  }
-
-  .hero p{
-    font-size:1rem;
-  }
-
-  nav{
-    padding:15px 20px;
-  }
-
-  nav div{
-    display:none;
-    position:absolute;
-    top:60px;
-    right:20px;
-    background:#111;
-    padding:15px;
-    border-radius:12px;
-    flex-direction:column;
-    gap:15px;
-  }
-
-  nav div a{
-    display:block;
-  }
-
-  .menu{
-    grid-template-columns:1fr;
-  }
-
-  .booking{
-    padding:25px;
-  }
-
-  .booking form{
-    grid-template-columns:1fr;
-  }
-
-  section{
-    padding:60px 5%;
-  }
-
-  footer{
-    font-size:0.9rem;
-  }
-}
-
-/* Hamburger Icon */
-.menu-toggle{
-  display:none;
-  font-size:26px;
-  color:#fff;
-  cursor:pointer;
-}
-
-@media (max-width:768px){
-  .menu-toggle{
-    display:block;
-  }
-}
-
-  </style>
-</head>
-<body>
-
-<header>
-  <nav>
-  <h2>Urban Dine</h2>
-
-  <div class="menu-toggle" onclick="toggleMenu()">☰</div>
-
-  <div id="navLinks">
-    <a href="#menu">Menu</a>
-      <a href="#booking">Book Table</a>
-      <a href="#gallery">Gallery</a>
-      <a href="admin/signup.php"
-   style="border:1px solid #c59d5f;padding:8px 18px;border-radius:20px">
-   Admin
-</a>
-</div>
-  </nav>
-  <script>
-function toggleMenu(){
-  let nav = document.getElementById("navLinks");
-  nav.style.display = nav.style.display === "flex" ? "none" : "flex";
-}
-</script>
-
-  <div class="hero">
-    <h1>Fine Dining Experience</h1>
-    <p>Delicious food • Cozy ambience • Perfect moments</p>
-    <a href="#booking" class="btn">Reserve Your Table</a>
-  </div>
-</header>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Urban Dine | Restaurant</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
 
 <style>
-*{
-  margin:0;
-  padding:0;
-  box-sizing:border-box;
-  font-family:'Poppins',sans-serif;
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif}
+body{background:#fafafa;color:#333}
+
+/* ===== HEADER & HERO ===== */
+header{
+  background:url('https://images.unsplash.com/photo-1552566626-52f8b828add9') center/cover no-repeat;
+  min-height:100vh;
+  color:#fff;
+  position:relative;
 }
-body{
-  background:#fafafa;
+header::after{
+  content:'';
+  position:absolute;
+  inset:0;
+  background:rgba(0,0,0,.55);
 }
-.menu-section{
-  padding:70px 8%;
-}
-.menu-title{
-  text-align:center;
-  margin-bottom:30px;
-}
-.menu-title h2{
-  font-size:32px;
-}
-.filter-btns{
+nav{
+  position:absolute;
+  top:0;left:0;
+  width:100%;
+  padding:20px 50px;
   display:flex;
+  justify-content:space-between;
+  align-items:center;
+  z-index:2;
+}
+nav h2{color:#fff}
+nav a{color:#fff;margin-left:20px;text-decoration:none;font-weight:500}
+
+.hero{
+  position:relative;
+  z-index:1;
+  min-height:100vh;
+  display:flex;
+  flex-direction:column;
   justify-content:center;
-  flex-wrap:wrap;
-  gap:15px;
-  margin-bottom:40px;
+  align-items:center;
+  text-align:center;
+  padding:20px;
 }
-.filter-btns button{
-  padding:10px 22px;
-  border:none;
-  border-radius:25px;
-  background:#eee;
-  cursor:pointer;
-  font-weight:500;
-  transition:.3s;
-}
-.filter-btns button.active,
-.filter-btns button:hover{
+.hero h1{font-size:3rem}
+.hero p{margin:15px 0}
+
+.btn{
+  padding:12px 28px;
   background:#c59d5f;
   color:#fff;
+  border-radius:30px;
+  text-decoration:none;
+  font-weight:600;
+  display:inline-block;
 }
+
+/* ===== SECTIONS ===== */
+section{padding:80px 8%}
+.section-title{text-align:center;margin-bottom:40px}
+.section-title h2{font-size:2.3rem}
+
+/* ===== MENU ===== */
+.menu-section{background:#fafafa}
+.filter-btns{display:flex;justify-content:center;gap:15px;flex-wrap:wrap;margin-bottom:35px}
+.filter-btns button{
+  padding:10px 22px;border:none;border-radius:25px;
+  background:#eee;cursor:pointer;font-weight:500;
+}
+.filter-btns button.active,
+.filter-btns button:hover{background:#c59d5f;color:#fff}
+
 .menu-items{
   display:grid;
   grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
   gap:30px;
 }
 .menu-card{
-  background:#fff;
-  border-radius:15px;
-  overflow:hidden;
+  background:#fff;border-radius:16px;
   box-shadow:0 10px 25px rgba(0,0,0,.1);
-  transition:.3s;
+  overflow:hidden;transition:.3s;
 }
-.menu-card:hover{
-  transform:translateY(-8px);
+.menu-card:hover{transform:translateY(-8px)}
+.menu-card img{width:100%;height:200px;object-fit:cover}
+.menu-info{padding:18px}
+.price{color:#c59d5f;font-weight:600}
+
+/* ===== BOOKING ===== */
+.booking{
+  background:#111;color:#fff;
+  border-radius:20px;padding:40px;
 }
-.menu-card img{
-  width:100%;
-  height:200px;
-  object-fit:cover;
+.booking form{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+  gap:18px;
 }
-.menu-info{
-  padding:20px;
+input,select{
+  padding:12px;border-radius:10px;border:none
 }
-.menu-info h4{
-  margin-bottom:8px;
+
+/* ===== GALLERY ===== */
+.gallery{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+  gap:20px;
 }
-.price{
-  color:#c59d5f;
-  font-weight:600;
+.gallery img{
+  width:100%;height:220px;
+  object-fit:cover;border-radius:16px
+}
+
+/* ===== FOOTER ===== */
+footer{
+  background:#000;color:#aaa;
+  text-align:center;padding:25px
+}
+
+/* ===== MOBILE ===== */
+@media(max-width:768px){
+  nav{padding:15px 20px}
+  .hero h1{font-size:2rem}
+  section{padding:60px 5%}
 }
 </style>
 </head>
 
 <body>
 
-<section class="menu-section">
-  <div class="menu-title">
-    <h2>Our Menu</h2>
-    <p>Choose your favorite</p>
+<header>
+ <nav>
+  <h2>Urban Dine</h2>
+
+  <div class="menu-toggle" id="menuToggle">
+    ☰
   </div>
 
-  <!-- FILTER BUTTONS -->
-  <div class="filter-btns">
-    <button class="active" onclick="filterMenu('all')">All</button>
-    <button onclick="filterMenu('starters')">Starters</button>
-    <button onclick="filterMenu('main')">Main Course</button>
-    <button onclick="filterMenu('chinese')">Chinese</button>
-    <button onclick="filterMenu('desserts')">Desserts</button>
-    <button onclick="filterMenu('drinks')">Drinks</button>
+  <div class="nav-links" id="navLinks">
+    <a href="#menu" onclick="closeMenu()">Menu</a>
+    <a href="#booking" onclick="closeMenu()">Book Table</a>
+    <a href="#contact" onclick="closeMenu()">Contact</a>
+
+    <?php if(isset($_SESSION['user_id'])){ ?>
+        <a href="my-account.php" class="btn" onclick="closeMenu()">My Account</a>
+        <a href="logout.php" class="btn" onclick="closeMenu()">Logout</a>
+    <?php } else { ?>
+        <a href="login.php" class="btn" onclick="closeMenu()">Login</a>
+        <a href="signup.php" class="btn" onclick="closeMenu()">Signup</a>
+    <?php } ?>
   </div>
+</nav>
 
-  <!-- MENU ITEMS -->
-  <div class="menu-items">
+<style>.menu-toggle{
+  display:none;
+  font-size:30px;
+  cursor:pointer;
+  user-select:none;
+}
 
-    <!-- STARTERS -->
-    <div class="menu-card starters">
-      <img src="https://images.unsplash.com/photo-1600891964599-f61ba0e24092">
-      <div class="menu-info">
-        <h4>Paneer Tikka</h4>
-        <p class="price">₹220</p>
-      </div>
-    </div>
+.nav-links{
+  display:flex;
+  align-items:center;
+}
 
-    <div class="menu-card starters">
-      <img src="https://images.unsplash.com/photo-1628294895950-9805252327bc">
-      <div class="menu-info">
-        <h4>Veg Spring Roll</h4>
-        <p class="price">₹180</p>
-      </div>
-    </div>
+/* ===== MOBILE NAV ===== */
+@media(max-width:768px){
 
-    <!-- MAIN COURSE -->
-    <div class="menu-card main">
-      <img src="https://images.unsplash.com/photo-1546833999-b9f581a1996d">
-      <div class="menu-info">
-        <h4>Paneer Butter Masala</h4>
-        <p class="price">₹280</p>
-      </div>
-    </div>
+  .menu-toggle{
+    display:block;
+    color:#fff;
+  }
 
-    <div class="menu-card main">
-      <img src="https://images.unsplash.com/photo-1601050690597-df0568f70950">
-      <div class="menu-info">
-        <h4>Veg Biryani</h4>
-        <p class="price">₹260</p>
-      </div>
-    </div>
+  .nav-links{
+    position:fixed;
+    top:0;
+    right:-100%;
+    height:100vh;
+    width:260px;
+    background:#000;
+    flex-direction:column;
+    padding-top:90px;
+    gap:20px;
+    transition:0.4s;
+    z-index:999;
+  }
 
-    <!-- CHINESE -->
-    <div class="menu-card chinese">
-      <img src="https://images.unsplash.com/photo-1617196034183-421b4917c92d">
-      <div class="menu-info">
-        <h4>Hakka Noodles</h4>
-        <p class="price">₹230</p>
-      </div>
-    </div>
+  .nav-links a{
+    font-size:18px;
+  }
 
-    <div class="menu-card chinese">
-      <img src="https://images.unsplash.com/photo-1612929633738-8fe44f7ec841">
-      <div class="menu-info">
-        <h4>Manchurian</h4>
-        <p class="price">₹210</p>
-      </div>
-    </div>
+  .nav-links.active{
+    right:0;
+  }
+}
 
-    <!-- DESSERTS -->
-    <div class="menu-card desserts">
-      <img src="https://images.unsplash.com/photo-1563805042-7684c019e1cb">
-      <div class="menu-info">
-        <h4>Chocolate Brownie</h4>
-        <p class="price">₹150</p>
-      </div>
-    </div>
+</style>
+<script>
+const menuToggle = document.getElementById("menuToggle");
+const navLinks = document.getElementById("navLinks");
 
-    <div class="menu-card desserts">
-      <img src="https://images.unsplash.com/photo-1605475127963-639d85d7f6f2">
-      <div class="menu-info">
-        <h4>Ice Cream Sundae</h4>
-        <p class="price">₹130</p>
-      </div>
-    </div>
+menuToggle.onclick = () => {
+  navLinks.classList.toggle("active");
+};
 
-    <!-- DRINKS -->
-    <div class="menu-card drinks">
-      <img src="https://images.unsplash.com/photo-1544145945-f90425340c7e">
-      <div class="menu-info">
-        <h4>Cold Coffee</h4>
-        <p class="price">₹120</p>
-      </div>
-    </div>
+function closeMenu(){
+  navLinks.classList.remove("active");
+}
+</script>
 
-    <div class="menu-card drinks">
-      <img src="https://images.unsplash.com/photo-1509042239860-f550ce710b93">
-      <div class="menu-info">
-        <h4>Fresh Lime Soda</h4>
-        <p class="price">₹90</p>
-      </div>
-    </div>
 
-  </div>
+
+<div class="hero">
+<h1>Fine Dining Experience</h1>
+<p>Delicious food • Cozy ambience • Perfect moments</p>
+<a href="#booking" class="btn">Reserve Your Table</a>
+</div>
+</header>
+
+<!-- ===== MENU ===== -->
+<section id="menu" class="menu-section">
+<div class="section-title">
+<h2>Our Menu</h2>
+<p>Choose your favorite</p>
+</div>
+
+<div class="filter-btns">
+<button class="active" onclick="filterMenu('all')">All</button>
+<button onclick="filterMenu('starters')">Starters</button>
+<button onclick="filterMenu('main')">Main Course</button>
+<button onclick="filterMenu('chinese')">Chinese</button>
+<button onclick="filterMenu('desserts')">Desserts</button>
+<button onclick="filterMenu('drinks')">Drinks</button>
+</div>
+
+<div class="menu-items">
+<div class="menu-card starters"><img src="https://images.unsplash.com/photo-1600891964599-f61ba0e24092"><div class="menu-info"><h4>Paneer Tikka</h4><p class="price">₹220</p></div></div>
+<div class="menu-card main"><img src="https://images.unsplash.com/photo-1601050690597-df0568f70950"><div class="menu-info"><h4>Veg Biryani</h4><p class="price">₹260</p></div></div>
+<div class="menu-card chinese"><img src="https://images.unsplash.com/photo-1617196034183-421b4917c92d"><div class="menu-info"><h4>Hakka Noodles</h4><p class="price">₹230</p></div></div>
+<div class="menu-card desserts"><img src="https://images.unsplash.com/photo-1563805042-7684c019e1cb"><div class="menu-info"><h4>Chocolate Brownie</h4><p class="price">₹150</p></div></div>
+</div>
 </section>
+
+<script>
+function filterMenu(cat){
+  let items=document.querySelectorAll('.menu-card');
+  document.querySelectorAll('.filter-btns button').forEach(b=>b.classList.remove('active'));
+  event.target.classList.add('active');
+
+  items.forEach(item=>{
+    item.style.display=(cat=="all"||item.classList.contains(cat))?"block":"none";
+  });
+}
+</script>
+
+</body>
+</html>
+
 
 <script>
 function filterMenu(category){
